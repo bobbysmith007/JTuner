@@ -1,0 +1,302 @@
+                              JTuner
+                         ---------------
+                                                                                
+                Copyright (C) 2004 Michael Corlett
+                                                                                
+                  email: jtuner@corlett.plus.com
+                                                                                
+                                                                                
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License Version 2 as
+    published by the Free Software Foundation;
+                                                                                
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+                                                                                
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+
+
+Running JTuner
+
+    JTuner will work either as an applet in a web page, or as a
+    stand-alone program.  To run stand-alone, use
+
+        java -jar JTuner.jar
+
+    from the command line, or you may be able to just double-click on
+    the jar file, if your computer is set up for this.
+
+
+What You Need 
+        
+    Java 1.2 - Java 1.1 doesn't have facilities for accessing the
+    soundcard.  You will need the plug-in if you are using JTuner as
+    and applet, or the JRE running it stand alone.  Get it from 
+    http://java.sun.com/products/plugin/
+
+
+    A Soundcard - Any modern 16 bit soundcard should work    
+
+                    
+    A .java.policy file (if you are running it in as an applet) -
+    Access to the soundcard is protected by the Java security
+    mechanism.  To allow the applet to record sound, you need to have
+    the following lines in your .java.policy file:  
+        
+    grant {
+        permission javax.sound.sampled.AudioPermission "record";
+    };
+        
+    This file needs to be called .java.policy and it lives in your home
+    directory
+
+
+    A Mixer Program - You need to use a mixer program to select the
+    sound source being used (either line-in or microphone) and to set
+    the recording volume.  Some sort of mixer program is normally
+    provided with the soundcard.
+        
+        
+    A Fast(ish) Computer - The applet was developed on a computer with
+    a 600MHz PIII which is fine under Linux but too slow when running
+    Windows 2000.  The speed of the video card will also make a
+    difference.
+      
+        
+    A Good Sound Source - The signal needs to be reasonably loud with a
+    minimum of noise.  At the moment, the applet works very well with
+    an electric guitar plugged directly into the soundcard but I have
+    had no success so far when using the kind of microphone that comes
+    with most soundcards.  See the section tips below on getting a good
+    signal.
+      
+    
+How To Use It
+    
+    Set up your .java.policy file - see above.
+      
+
+    Adjust your mixer settings - select the correct sound source and
+    adjust the input volume.  You may need to play around a bit to get
+    the volume right.  
+        
+
+    Make sure nothing else is using the soundcard - If some other
+    program is using the soundcard then you the applet may give you an
+    error message, or it may just do nothing.
+
+      
+    Adjust the soundcard settings - these are the controls on the top
+    line to the left of the 'on/off' button.  You shouldn't have to
+    touch these, but if your sound source is coming in on one channel,
+    you may get a better signal by choosing 'stereo' and the correct
+    ('L'eft or 'R'ight) channel.  The slider selects the sampling
+    frequency and the higher the better.  Most soundcards should be
+    happy with the default (48000Hz).  
+
+        
+    Click the 'On/off' button in the top right - the text of the button
+    should change to 'on'.  If it doesn't, something's wrong and if
+    you're lucky then the applet will give you an error message.  The
+    most likely problem is that the the policy file isn't set up
+    correctly (for the applet), or some other program is using the
+    sound card.  If everything's working, you should also get a green
+    light on the horizontal traffic lights below the top display.
+
+
+    Select the note you want to tune - There are six buttons E, A, D,
+    G, B and E representing the strings on an ordinary guitar.  The
+    buttons labelled E', A' etc. represent the frequencies one octave
+    above.  Click on the button for the string you want to tune.  You
+    can select other frequencies by using the slider above these
+    buttons or by typing the exact frequency into the box where the
+    frequency is displayed.
+      
+        
+    Play the string - The top part of the display will be centred on
+    the note you are trying to tune to.  The aim is to get the red bar
+    exactly in the centre.  If the note you are playing is outside the
+    range of the display then the green arrow that lights up will show
+    you which way you should tune the string (arrow pointing right,
+    tune upwards; arrow pointing left, tune downwards).  The horizontal
+    traffic lights show you what the applet is doing: The green light
+    is lit when the applet is waiting for a note; the yellow one is lit
+    when it has registered that a note has been played and it is
+    pausing to allow the signal to settle down; when the red one is
+    lit, then you should see a red bar in the top section of the
+    display showing the frequency of the note being played.
+        
+      
+    Auto Mode - The buttons marked 'AG' and 'AC' select automatic mode.
+    In this mode, the applet tries to guess which note you are playing
+    and sets the display accordingly.  ('AG' restricts the range to the
+    standard guitar strings and their octaves, 'AC' allows for any
+    semitone interval as on a piano.)  This is the easiest way to use
+    the applet, but it requires a cleaner signal than the non-automatic
+    mode in order to work properly.  When using this mode, it's
+    important to make sure the traffic light is on green before
+    changing strings.  Also, if it doesn't guess the correct note first
+    time, try again because the applet's ability to guess the note is
+    affected by the note that was played last.
+    
+        
+    Scaling - The slider above the top part of the display on the left
+    (below the soundcard controls) changes the scale of the display.
+    This can be varied between about 4 octaves and 1/5th of a semitone.
+    The scale is marked in hundredths of a semitone (cents) and with a
+    good signal it is accurate to better than half a cent which should
+    be more than adequate for most guitars.
+    
+        
+    Damping - The slider above the top part of the display on the right
+    controls how much the movement of the red bar is damped.  Moving it
+    to the left decreases the damping which means that it will be more
+    responsive as you change the tuning of the string, but is more
+    likely to skip about due to transient signals.
+    
+    
+Waveform Display
+    
+    The bottom half of the display shows a trace of the signal being
+    measured.  This is mainly so that you can see whether or not you
+    are getting a good input signal but some of the controls around the
+    display affect the way the tuner works as well.
+    
+        
+    Threshold - This is controlled by the two sliders to the left of
+    the lower display.  The one on the far left controls the attack
+    threshold which is the sound level at which the tuner recognises
+    that a note is being played.  The slider next to it controls the
+    decay threshold which is the the level at which the tuner decides
+    that a note is no longer being played.  The values of these
+    controls are represented by the two horizontal grey lines on the
+    display.  If you have a very quiet signal you may need to reduce
+    both.  If you have a very noisy signal you may need to increase
+    them (but the tuner probably won't work very well if this is the
+    case).
+
+
+    Delay - This is controlled by the slider above the lower display
+    (below the note selection buttons).  This controls the delay
+    between when a note is recognised (as it reaches the attack
+    threshold) and when the tuner starts working.  This delay is there
+    because when a string is first struck, the waveform it produces can
+    be very messy and it takes a fraction of a second for it to settle
+    down.  The value of this control is represented by the vertical
+    grey line on the display (if it is in range).  You shouldn't need
+    to alter this from the default value.
+        
+          
+    Vertical Scaling - This is controlled by the slider to the right of
+    the lower display and alters the vertical scaling of the display.
+    If you have a very quiet signal, for example, you can move this
+    upwards to see the shape of the signal better.
+        
+          
+    Horizontal Scaling - There are two sliders below the lower display.
+    The top one of these controls the horizontal scaling of the
+    display.  Move it to the right to show more of the signal being
+    processed.
+        
+          
+    Horizontal Offset - This is controlled by the slider right at the
+    bottom.  If you think of the display as being a window onto the
+    signal, moving this slider moves the window to show you a different
+    part of the sample.
+        
+    
+Notes
+
+    Signal Level
+    
+    If you don't see a clear trace of the signal (in green) on the
+    lower display then the tuner won't work.  (This is the main reason
+    that this display is there.)  Either you are not getting a signal
+    at all, or it is too quiet.
+    
+    If the tops and bottoms of the trace are flat, then the signal is
+    so loud that it is distorting but this doesn't necessarily stop the
+    tuner from working.
+    
+
+    Tips 
+
+    If you find the tuner isn't working well, you can try some of the following:
+    
+    
+    If you're using a microphone, make sure there is no other noise in
+    the room as this will confuse the tuner.
+    
+    
+    Damp the strings that you are not tuning.  If they are left free to
+    vibrate they will add components to the signal, even if you can't
+    hear them.
+
+    
+    Pluck the string in the middle rather than in the normal position.
+    This tends to produce a simpler waveform that is easier for the
+    tuner to process.
+    
+    
+    Use the octave harmonic to tune the string, this also tends to
+    produce a simpler waveform.  (To play the octave harmonic, place a
+    finger lightly on the string just above the twelfth (octave) fret.
+    Pluck the string in the middle of what is left (i.e. a quarter of
+    the way from the bottom).  If the note sounds dull, move the
+    position of your finger slightly until you get exactly the right
+    spot which might not be directly above the fret depending on how
+    your guitar is set up.)
+    
+      
+    Watch the traffic lights.  This should give you a feel for what the
+    tuner is doing.  Red shows when the tuner is listening, yellow
+    during the delay period and green when it is actually measuring the
+    frequency.
+      
+    
+    
+Tuning
+    
+    The frequency values used by the selection buttons and the
+    auto-select mode are, according to my limited understanding, the
+    'standard' values used for the western musical scale.  This scale
+    is based on a value of 440Hz for the A above middle-C and has a
+    (logarithmically) constant interval between each semi-tone and with
+    each octave being exactly double the value of the one below.  The
+    selection buttons are based on the 'standard' tuning for a
+    six-string guitar.  If you want to use a different guitar tuning,
+    or a different instrument or even a different scale (e.g. tempered
+    scale etc.) then send me an email with the names of the notes you
+    want (together with the frequency values, preferably to three
+    decimal places, if from a different scale) and I may be able to
+    accommodate them in a future version of the applet.
+    
+    
+    The tuning of any instrument is a compromise and the 'correct'
+    tuning is whatever sounds best to the human brain, which can depend
+    on the particular piece of music being played.  Unless you happen
+    to have an implementation of the human brain written in Java, it's
+    probably impossible to produce an applet that will do the job that
+    a virtuoso musician would do.  Having said that, as a less than
+    competent musician, I have found this program very useful and with
+    the right input signal I believe it's at least as good as the kind
+    of electronic tuner you find in a music shop.  There are some
+    situations where the applet doesn't work optimally, particularly
+    when using a microphone, and hopefully this will be remedied in a
+    future release.
+
+    
+Send Me An Email
+
+    If you've tried the applet, whether it worked for you or not, I
+    would be glad to get an email from you.  If you can, please include
+    as much information about the computer and browser you are using so
+    I can find out which kinds of setup are causing problems.  Please
+    note that I may not be able to reply, as this is a part-time
+    project, but if you include a problem description, I may be able to
+    do something to cure it in a future release.
